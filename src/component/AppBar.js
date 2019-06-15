@@ -4,15 +4,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
+import LogoutIcon from '@material-ui/icons/Forward';
 import {useGlobal} from "../store/Store";
 import {searchTodo} from "../data/RestInteraction";
 import {useStyles} from "../css/MaterialCss";
 import AddTodo from "./AddTodo";
 
-export default function SearchAppBar() {
+export default function SearchAppBar(props) {
   const classes = useStyles();
   const [globalState, globalActions] = useGlobal();
 
@@ -22,18 +22,15 @@ export default function SearchAppBar() {
     globalActions.openDialog();
   };
 
+  const handleLogOutClick = () => {
+    localStorage.removeItem("token");
+    window.location = "/"
+  };
+
   return (
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="Open drawer"
-            >
-              <MenuIcon />
-            </IconButton>
             <Typography className={classes.titleAppBar} variant="h6" noWrap>
               Material-UI Todo
             </Typography>
@@ -59,6 +56,15 @@ export default function SearchAppBar() {
                 onClick={(e) => handleAddClick()}
             >
               <AddIcon />
+            </IconButton>
+            <IconButton
+                aria-label="add a new todo"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                color="inherit"
+                onClick={(e) => handleLogOutClick()}
+            >
+              <LogoutIcon />
             </IconButton>
           </Toolbar>
         </AppBar>
