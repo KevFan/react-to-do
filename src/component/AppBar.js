@@ -14,7 +14,7 @@ import AddTodo from "./AddTodo";
 
 export default function SearchAppBar(props) {
   const classes = useStyles();
-  const [globalState, globalActions] = useGlobal();
+  const [globalActions] = useGlobal();
 
   const handleAddClick = () => {
     globalActions.setCustomModalTitle("Add todo");

@@ -17,7 +17,7 @@ export default function SignUp(props) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [globalState, globalActions] = useGlobal();
+  const [globalActions] = useGlobal();
 
   return (
       <Container component="main" maxWidth="xs">
