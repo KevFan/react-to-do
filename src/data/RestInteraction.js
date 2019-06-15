@@ -102,8 +102,7 @@ export function signUp(username, password, props, globalActions) {
       body: JSON.stringify({username: username, password: password})
     }).then(response => {
           if (response.ok) {
-            props.history.push("/");
-            globalActions.showSnackMessage("Account created. Sign in now to begin !")
+            login(username, password, props, globalActions)
           } else {
             globalActions.showSnackMessage("Failed to create account Please try again later.")
           }
