@@ -38,3 +38,43 @@ export function deleteTodo(id, globalActions) {
       findAllTodo(globalActions)
   )
 }
+
+export function login(username, password, props) {
+  const data = new URLSearchParams();
+
+  data.append("username", username);
+  data.append("password", password);
+
+  fetch('/api/authenticate', {
+    method: 'POST',
+    body: data
+  }).then(response => {
+    response.headers.forEach(function(value, name) {
+      if (name === "authorization") {
+        localStorage.setItem("token", value);
+        props.history.push("/todo");
+      }
+    });
+  }).catch(err =>
+      console.log(err)
+  );
+}
+
+export function signUp(username, password, props) {
+  fetch('/api/v1/user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({username: username, password: password})
+  }).then(response => {
+        if (response.ok) {
+          props.history.push("/")
+        } else {
+          console.log(response);
+        }
+      }
+  ).catch(err =>
+      console.log(err)
+  );
+}

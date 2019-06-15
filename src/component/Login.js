@@ -11,34 +11,13 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {useStyles} from "../css/MaterialCss";
+import {login} from "../data/RestInteraction";
 
 export default function Login(props) {
   const classes = useStyles();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleLogin = () => {
-    const data = new URLSearchParams();
-
-    data.append("username", username);
-    data.append("password", password);
-
-    fetch('/api/authenticate', {
-      method: 'POST',
-      body: data
-    }).then(response => {
-      response.headers.forEach(function(value, name) {
-        if (name === "authorization") {
-          console.log(value);
-          localStorage.setItem("token", value);
-          props.history.push("/todo");
-        }
-      });
-    }).catch(err =>
-        console.log(err)
-    );
-  };
 
   return (
       <Container component="main" maxWidth="xs">
@@ -84,7 +63,7 @@ export default function Login(props) {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={handleLogin}
+                onClick={(e) => login(username, password, props)}
             >
               Sign In
             </Button>

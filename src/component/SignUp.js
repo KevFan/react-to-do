@@ -9,32 +9,13 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {useStyles} from "../css/MaterialCss";
+import {signUp} from "../data/RestInteraction";
 
 export default function SignUp(props) {
   const classes = useStyles();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSignUp = () => {
-
-    fetch('/api/v1/user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({username: username, password: password})
-    }).then(response => {
-          if (response.ok) {
-            props.history.push("/")
-          } else {
-            console.log(response);
-          }
-        }
-    ).catch(err =>
-        console.log(err)
-    );
-  };
 
   return (
       <Container component="main" maxWidth="xs">
@@ -76,7 +57,7 @@ export default function SignUp(props) {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={handleSignUp}
+                onClick={(e) => signUp(username, password, props)}
             >
               Sign In
             </Button>
