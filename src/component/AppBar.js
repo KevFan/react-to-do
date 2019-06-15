@@ -35,7 +35,7 @@ export default function SearchAppBar() {
               <MenuIcon />
             </IconButton>
             <Typography className={classes.titleAppBar} variant="h6" noWrap>
-              Material-UI
+              Material-UI Todo
             </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -52,7 +52,7 @@ export default function SearchAppBar() {
               />
             </div>
             <IconButton
-                aria-label="Account of current user"
+                aria-label="add a new todo"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 color="inherit"
