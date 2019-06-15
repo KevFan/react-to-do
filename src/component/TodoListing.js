@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -8,6 +8,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {makeStyles} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import IconButton from "@material-ui/core/IconButton";
+import SearchAppBar from "./AppBar";
+import {useGlobal} from "../store/Store";
+import {deleteTodo, findAllTodo} from "../data/RestInteraction";
 
 const useStyles = makeStyles({
   card: {
@@ -28,39 +31,18 @@ const useStyles = makeStyles({
 });
 
 export default function TodoListing() {
-  const [todos, setTodos] = useState([]);
+  const [globalState, globalActions] = useGlobal();
   const classes = useStyles();
 
-  const getAll = () => {
-    fetch('/api/v1/todo', {
-      method: 'GET',
-      withCredentials: true,
-      credentials: 'include',
-      headers: {
-        'Authorization': localStorage.getItem("token"),
-      }
-    }).then(response =>
-      response.json()
-    ).then(data => setTodos(data));
-  };
-
   useEffect(() => {
-    getAll()
-  });
+    findAllTodo(globalActions)
+  }, []);
 
-  const deleteTodo = (id) => {
-    fetch('/api/v1/todo/' + id, {
-      method: 'DELETE',
-      withCredentials: true,
-      headers: {
-        'Authorization': localStorage.getItem("token"),
-      }
-    }).then(response =>
-        console.log(response)
-    )
+  const handleDeleteClick = (id) => {
+    deleteTodo(id, globalActions)
   };
 
-  const todoCards = todos.map(it => {
+  const todoCards = globalState.todos.map(it => {
     return (
         <Card key={it.id} className={classes.card}>
           <CardContent>
@@ -78,7 +60,7 @@ export default function TodoListing() {
             <IconButton >
               <EditIcon />
             </IconButton>
-            <IconButton onClick={(e) => deleteTodo(it.id)}>
+            <IconButton onClick={(e) => handleDeleteClick(it.id)}>
               <DeleteIcon />
             </IconButton>
           </CardActions>
@@ -87,8 +69,11 @@ export default function TodoListing() {
   });
 
   return (
-      <Container component="main" maxWidth="sm">
-        {todoCards}
-      </Container>
+      <div>
+        <SearchAppBar/>
+        <Container component="main" maxWidth="sm">
+          {todoCards}
+        </Container>
+      </div>
   );
 }
