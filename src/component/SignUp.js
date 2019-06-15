@@ -37,30 +37,28 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Login(props) {
+export default function SignUp(props) {
   const classes = useStyles();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    const data = new URLSearchParams();
+  const handleSignUp = () => {
 
-    data.append("username", username);
-    data.append("password", password);
-
-    fetch('/api/authenticate', {
+    fetch('/api/v1/user', {
       method: 'POST',
-      body: data
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({username: username, password: password})
     }).then(response => {
-      response.headers.forEach(function(value, name) {
-        if (name === "authorization") {
-          console.log(value);
-          localStorage.setItem("token", value);
-          props.history.push("/todo");
+          if (response.ok) {
+            props.history.push("/")
+          } else {
+            console.log(response);
+          }
         }
-      });
-    }).catch(err =>
+    ).catch(err =>
         console.log(err)
     );
   };
@@ -73,7 +71,7 @@ export default function Login(props) {
             <LockOutlinedIcon/>
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign Up
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -100,23 +98,19 @@ export default function Login(props) {
                 autoComplete="current-password"
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <FormControlLabel
-                control={<Checkbox value="remember" color="primary"/>}
-                label="Remember me"
-            />
             <Button
                 fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={handleLogin}
+                onClick={handleSignUp}
             >
               Sign In
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/" variant="body2">
+                  {"Already have an account? Log in"}
                 </Link>
               </Grid>
             </Grid>
