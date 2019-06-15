@@ -10,12 +10,14 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {useStyles} from "../css/MaterialCss";
 import {signUp} from "../data/RestInteraction";
+import {useGlobal} from "../store/Store";
 
 export default function SignUp(props) {
   const classes = useStyles();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [globalState, globalActions] = useGlobal();
 
   return (
       <Container component="main" maxWidth="xs">
@@ -57,9 +59,9 @@ export default function SignUp(props) {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={(e) => signUp(username, password, props)}
+                onClick={(e) => signUp(username, password, props, globalActions)}
             >
-              Sign In
+              Create Account
             </Button>
             <Grid container>
               <Grid item>

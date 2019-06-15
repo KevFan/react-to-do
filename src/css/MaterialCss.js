@@ -92,4 +92,8 @@ export const useStyles = makeStyles(theme => ({
       },
     },
   },
+  // SnackBar
+  close: {
+    padding: theme.spacing(0.5),
+  },
 }));

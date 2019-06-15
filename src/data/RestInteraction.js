@@ -63,7 +63,6 @@ export function updateTodo(id, todoString, globalActions) {
     },
     body: JSON.stringify({contents: todoString})
   }).then(response => {
-    console.log(response);
     findAllTodo(globalActions)
   })
 }
@@ -93,7 +92,7 @@ export function login(username, password, props, globalActions) {
   );
 }
 
-export function signUp(username, password, props) {
+export function signUp(username, password, props, globalActions) {
   fetch('/api/v1/user', {
     method: 'POST',
     headers: {
@@ -102,9 +101,10 @@ export function signUp(username, password, props) {
     body: JSON.stringify({username: username, password: password})
   }).then(response => {
         if (response.ok) {
-          props.history.push("/")
+          props.history.push("/");
+          globalActions.showSnackMessage("Account created. Sign in now to begin !")
         } else {
-          console.log(response);
+          globalActions.showSnackMessage("Failed to create account Please try again later.")
         }
       }
   ).catch(err =>
