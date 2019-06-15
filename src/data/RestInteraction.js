@@ -12,15 +12,19 @@ export function findAllTodo(globalActions) {
 }
 
 export function searchTodo(searchString, globalActions) {
-  fetch('/api/v1/todo/search/' + searchString, {
-    method: 'GET',
-    withCredentials: true,
-    headers: {
-      'Authorization': localStorage.getItem("token"),
-    }
-  }).then(response =>
-      response.json()
-  ).then(data => globalActions.setTodos(data))
+  if (searchString) {
+    fetch('/api/v1/todo/search/' + searchString, {
+      method: 'GET',
+      withCredentials: true,
+      headers: {
+        'Authorization': localStorage.getItem("token"),
+      }
+    }).then(response =>
+        response.json()
+    ).then(data => globalActions.setTodos(data))
+  } else {
+    findAllTodo(globalActions)
+  }
 }
 
 export function deleteTodo(id, globalActions) {

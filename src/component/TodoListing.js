@@ -5,30 +5,12 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {makeStyles} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import IconButton from "@material-ui/core/IconButton";
 import SearchAppBar from "./AppBar";
 import {useGlobal} from "../store/Store";
 import {deleteTodo, findAllTodo} from "../data/RestInteraction";
-
-const useStyles = makeStyles({
-  card: {
-    minWidth: 275,
-    marginTop: 10,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-});
+import {useStyles} from "../css/MaterialCss";
 
 export default function TodoListing() {
   const [globalState, globalActions] = useGlobal();
@@ -37,10 +19,6 @@ export default function TodoListing() {
   useEffect(() => {
     findAllTodo(globalActions)
   }, []);
-
-  const handleDeleteClick = (id) => {
-    deleteTodo(id, globalActions)
-  };
 
   const todoCards = globalState.todos.map(it => {
     return (
@@ -60,7 +38,7 @@ export default function TodoListing() {
             <IconButton >
               <EditIcon />
             </IconButton>
-            <IconButton onClick={(e) => handleDeleteClick(it.id)}>
+            <IconButton onClick={(e) => deleteTodo(it.id, globalActions)}>
               <DeleteIcon />
             </IconButton>
           </CardActions>
