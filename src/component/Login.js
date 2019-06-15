@@ -37,12 +37,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Login() {
+export default function Login(props) {
   const classes = useStyles();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState("");
 
   const handleLogin = () => {
     const data = new URLSearchParams();
@@ -57,25 +56,13 @@ export default function Login() {
       response.headers.forEach(function(value, name) {
         if (name === "authorization") {
           console.log(value);
-          setToken(value);
+          localStorage.setItem("token", value);
+          props.history.push("/todo");
         }
       });
     }).catch(err =>
         console.log(err)
     );
-  };
-
-  const testGet = (e) => {
-    fetch('/api/v1/todo', {
-      method: 'GET',
-      withCredentials: true,
-      credentials: 'include',
-      headers: {
-        'Authorization': token,
-      }
-    }).then(response => {
-      console.log(response.json());
-    });
   };
 
   return (
