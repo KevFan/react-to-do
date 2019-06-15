@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,7 +9,7 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
@@ -40,12 +40,50 @@ const useStyles = makeStyles(theme => ({
 export default function Login() {
   const classes = useStyles();
 
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [token, setToken] = useState("");
+
+  const handleLogin = () => {
+    const data = new URLSearchParams();
+
+    data.append("username", username);
+    data.append("password", password);
+
+    fetch('/api/authenticate', {
+      method: 'POST',
+      body: data
+    }).then(response => {
+      response.headers.forEach(function(value, name) {
+        if (name === "authorization") {
+          console.log(value);
+          setToken(value);
+        }
+      });
+    }).catch(err =>
+        console.log(err)
+    );
+  };
+
+  const testGet = (e) => {
+    fetch('/api/v1/todo', {
+      method: 'GET',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        'Authorization': token,
+      }
+    }).then(response => {
+      console.log(response.json());
+    });
+  };
+
   return (
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
+        <CssBaseline/>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
+            <LockOutlinedIcon/>
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -56,11 +94,12 @@ export default function Login() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
                 autoFocus
+                onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
                 variant="outlined"
@@ -72,17 +111,18 @@ export default function Login() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox value="remember" color="primary"/>}
                 label="Remember me"
             />
             <Button
-                type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={handleLogin}
             >
               Sign In
             </Button>
