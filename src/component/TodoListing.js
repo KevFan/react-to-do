@@ -12,6 +12,8 @@ import {useGlobal} from "../store/Store";
 import {deleteTodo, findAllTodo} from "../data/RestInteraction";
 import {useStyles} from "../css/MaterialCss";
 import AddTodoDialog from "./AddTodo";
+import CustomDialog from "./CustomDialog";
+import EditTodo from "./EditTodo";
 
 export default function TodoListing() {
   const [globalState, globalActions] = useGlobal();
@@ -36,7 +38,11 @@ export default function TodoListing() {
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton >
+            <IconButton onClick={(e) => {
+              globalActions.setCustomModalTitle("Update Todo");
+              globalActions.setCustomModalBody(<EditTodo todo={it}/>);
+              globalActions.setCustomModal(true);}
+            }>
               <EditIcon />
             </IconButton>
             <IconButton onClick={(e) => deleteTodo(it.id, globalActions)}>
@@ -49,6 +55,7 @@ export default function TodoListing() {
 
   return (
       <div>
+        <CustomDialog/>
         <SearchAppBar/>
         <AddTodoDialog/>
         <Container component="main" maxWidth="sm">

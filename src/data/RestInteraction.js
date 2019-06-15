@@ -54,6 +54,20 @@ export function addTodo(todoString, globalActions) {
   })
 }
 
+export function updateTodo(id, todoString, globalActions) {
+  fetch('/api/v1/todo/' + id, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem("token"),
+    },
+    body: JSON.stringify({contents: todoString})
+  }).then(response => {
+    console.log(response);
+    findAllTodo(globalActions)
+  })
+}
+
 export function login(username, password, props) {
   const data = new URLSearchParams();
 
