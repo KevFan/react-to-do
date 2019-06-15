@@ -3,7 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -11,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import {useStyles} from "../css/MaterialCss";
 import {signUp} from "../data/RestInteraction";
 import {useGlobal} from "../store/Store";
+import {Link} from "react-router-dom";
 
 export default function SignUp(props) {
   const classes = useStyles();
@@ -65,7 +65,7 @@ export default function SignUp(props) {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="/" variant="body2">
+                <Link to={"/"} variant="body2">
                   {"Already have an account? Log in"}
                 </Link>
               </Grid>

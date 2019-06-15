@@ -4,6 +4,7 @@ import TodoListing from "./component/TodoListing";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import SignUp from "./component/SignUp";
 import CustomSnackbar from "./component/CustomSnackBar";
+import "./css/App.css";
 
 function App() {
   return (

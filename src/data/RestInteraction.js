@@ -93,21 +93,25 @@ export function login(username, password, props, globalActions) {
 }
 
 export function signUp(username, password, props, globalActions) {
-  fetch('/api/v1/user', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({username: username, password: password})
-  }).then(response => {
-        if (response.ok) {
-          props.history.push("/");
-          globalActions.showSnackMessage("Account created. Sign in now to begin !")
-        } else {
-          globalActions.showSnackMessage("Failed to create account Please try again later.")
+  if (username && password) {
+    fetch('/api/v1/user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({username: username, password: password})
+    }).then(response => {
+          if (response.ok) {
+            props.history.push("/");
+            globalActions.showSnackMessage("Account created. Sign in now to begin !")
+          } else {
+            globalActions.showSnackMessage("Failed to create account Please try again later.")
+          }
         }
-      }
-  ).catch(err =>
-      console.log(err)
-  );
+    ).catch(err =>
+        console.log(err)
+    );
+  } else {
+    globalActions.showSnackMessage("Username and password must not be blank!")
+  }
 }

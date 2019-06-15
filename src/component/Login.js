@@ -3,9 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import {useStyles} from "../css/MaterialCss";
 import {login} from "../data/RestInteraction";
 import {useGlobal} from "../store/Store";
+import {Link} from "react-router-dom";
 
 export default function Login(props) {
   const classes = useStyles();
@@ -29,7 +27,7 @@ export default function Login(props) {
             <LockOutlinedIcon/>
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign In
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -56,10 +54,6 @@ export default function Login(props) {
                 autoComplete="current-password"
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <FormControlLabel
-                control={<Checkbox value="remember" color="primary"/>}
-                label="Remember me"
-            />
             <Button
                 fullWidth
                 variant="contained"
@@ -71,7 +65,7 @@ export default function Login(props) {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="/signup" variant="body2">
+                <Link to={"/signup"} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
