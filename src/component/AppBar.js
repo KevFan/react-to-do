@@ -6,8 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import AddIcon from '@material-ui/icons/Add';
 import {useGlobal} from "../store/Store";
-import {searchTodo, findAllTodo} from "../data/RestInteraction";
+import {searchTodo} from "../data/RestInteraction";
 import {useStyles} from "../css/MaterialCss";
 
 export default function SearchAppBar() {
@@ -43,6 +44,15 @@ export default function SearchAppBar() {
                   onChange={(e) => searchTodo(e.target.value, globalActions)}
               />
             </div>
+            <IconButton
+                aria-label="Account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                color="inherit"
+                onClick={(e) => globalActions.setTodoDialog(true)}
+            >
+              <AddIcon />
+            </IconButton>
           </Toolbar>
         </AppBar>
       </div>

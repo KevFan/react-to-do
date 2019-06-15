@@ -11,6 +11,7 @@ import SearchAppBar from "./AppBar";
 import {useGlobal} from "../store/Store";
 import {deleteTodo, findAllTodo} from "../data/RestInteraction";
 import {useStyles} from "../css/MaterialCss";
+import AddTodoDialog from "./AddTodo";
 
 export default function TodoListing() {
   const [globalState, globalActions] = useGlobal();
@@ -49,6 +50,7 @@ export default function TodoListing() {
   return (
       <div>
         <SearchAppBar/>
+        <AddTodoDialog/>
         <Container component="main" maxWidth="sm">
           {todoCards}
         </Container>
