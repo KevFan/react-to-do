@@ -5,7 +5,9 @@ const initialState = {
   todos: [],
   showCustomModal: false,
   customModalBody: "",
-  customModalTitle: ""
+  customModalTitle: "",
+  showSnackBar: false,
+  snarkBarMessage: ""
 };
 
 const actions = {
@@ -24,6 +26,12 @@ const actions = {
   closeDialog: (store) => {
     store.setState({ showCustomModal: false });
   },
+  closeSnackBar: (store) => {
+    store.setState({ showSnackBar: false });
+  },
+  showSnackMessage: (store, message) => {
+    store.setState({ snarkBarMessage: message, showSnackBar: true});
+  }
 };
 
 export const useGlobal = useGlobalHook(React, initialState, actions);

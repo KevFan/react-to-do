@@ -68,7 +68,7 @@ export function updateTodo(id, todoString, globalActions) {
   })
 }
 
-export function login(username, password, props) {
+export function login(username, password, props, globalActions) {
   const data = new URLSearchParams();
 
   data.append("username", username);
@@ -78,12 +78,16 @@ export function login(username, password, props) {
     method: 'POST',
     body: data
   }).then(response => {
-    response.headers.forEach(function(value, name) {
-      if (name === "authorization") {
-        localStorage.setItem("token", value);
-        props.history.push("/todo");
-      }
-    });
+    if (response.ok) {
+      response.headers.forEach(function(value, name) {
+        if (name === "authorization") {
+          localStorage.setItem("token", value);
+          props.history.push("/todo");
+        }
+      });
+    } else {
+      globalActions.showSnackMessage("Username / Password Incorrect");
+    }
   }).catch(err =>
       console.log(err)
   );

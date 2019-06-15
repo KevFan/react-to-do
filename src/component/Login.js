@@ -12,9 +12,11 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {useStyles} from "../css/MaterialCss";
 import {login} from "../data/RestInteraction";
+import {useGlobal} from "../store/Store";
 
 export default function Login(props) {
   const classes = useStyles();
+  const [globalState, globalActions] = useGlobal();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -63,7 +65,7 @@ export default function Login(props) {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={(e) => login(username, password, props)}
+                onClick={(e) => login(username, password, props, globalActions)}
             >
               Sign In
             </Button>
