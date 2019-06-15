@@ -12,17 +12,17 @@ const actions = {
   setTodos: (store, todos) => {
     store.setState({ todos: todos });
   },
-  setTodoDialog: (store, open) => {
-    store.setState({ showAddTodoDialog: open });
-  },
-  setCustomModal: (store, open) => {
-    store.setState({ showCustomModal: open });
-  },
   setCustomModalBody: (store, body) => {
     store.setState({ customModalBody: body });
   },
   setCustomModalTitle: (store, title) => {
     store.setState({ customModalTitle: title });
+  },
+  openDialog: (store) => {
+    store.setState({ showCustomModal: true });
+  },
+  closeDialog: (store) => {
+    store.setState({ showCustomModal: false });
   },
 };
 

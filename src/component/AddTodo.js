@@ -12,7 +12,7 @@ export default function AddTodo() {
 
   const handleAddTodo = () => {
     addTodo(content, globalActions);
-    globalActions.setCustomModal(false);
+    globalActions.closeDialog();
   };
 
   return (
@@ -30,7 +30,7 @@ export default function AddTodo() {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={(e) => globalActions.setTodoDialog(false)} color="primary">
+            <Button onClick={(e) => globalActions.closeDialog()} color="primary">
               Cancel
             </Button>
             <Button onClick={(e) => handleAddTodo()} color="primary">

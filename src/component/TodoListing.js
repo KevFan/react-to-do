@@ -22,6 +22,12 @@ export default function TodoListing() {
     findAllTodo(globalActions)
   }, []);
 
+  const handleEditClick = (todo) => {
+    globalActions.setCustomModalTitle("Update Todo");
+    globalActions.setCustomModalBody(<EditTodo todo={todo}/>);
+    globalActions.openDialog();
+  };
+
   const todoCards = globalState.todos.map(it => {
     return (
         <Card key={it.id} className={classes.card}>
@@ -37,11 +43,7 @@ export default function TodoListing() {
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton onClick={(e) => {
-              globalActions.setCustomModalTitle("Update Todo");
-              globalActions.setCustomModalBody(<EditTodo todo={it}/>);
-              globalActions.setCustomModal(true);}
-            }>
+            <IconButton onClick={(e) => handleEditClick(it)}>
               <EditIcon />
             </IconButton>
             <IconButton onClick={(e) => deleteTodo(it.id, globalActions)}>

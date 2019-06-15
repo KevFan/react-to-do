@@ -19,7 +19,7 @@ export default function SearchAppBar() {
   const handleAddClick = () => {
     globalActions.setCustomModalTitle("Add todo");
     globalActions.setCustomModalBody(<AddTodo/>);
-    globalActions.setCustomModal(true)
+    globalActions.openDialog();
   };
 
   return (

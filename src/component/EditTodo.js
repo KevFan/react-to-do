@@ -12,7 +12,7 @@ export default function EditTodoDialog(props) {
 
   const handleUpdateClick = () => {
     updateTodo(props.todo.id, content, globalActions);
-    globalActions.setCustomModal(false);
+    globalActions.closeDialog();
   };
 
   return (
@@ -31,7 +31,7 @@ export default function EditTodoDialog(props) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={(e) => globalActions.setCustomModal(false)} color="primary">
+            <Button onClick={(e) => globalActions.closeDialog()} color="primary">
               Cancel
             </Button>
             <Button onClick={(e) => handleUpdateClick()} color="primary">

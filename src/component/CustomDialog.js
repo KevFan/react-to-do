@@ -8,7 +8,7 @@ export default function CustomDialog(props) {
 
   return (
       <div>
-        <Dialog open={globalState.showCustomModal} onClose={(e) => globalActions.setCustomModal(false)}
+        <Dialog open={globalState.showCustomModal} onClose={(e) => globalActions.closeDialog()}
                 aria-labelledby="form-dialog-title" fullWidth={true}
                 maxWidth = {'md'}>
           <DialogTitle id="form-dialog-title">{globalState.customModalTitle}</DialogTitle>
