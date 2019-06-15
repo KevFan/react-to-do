@@ -13,6 +13,7 @@ import {deleteTodo, findAllTodo} from "../data/RestInteraction";
 import {useStyles} from "../css/MaterialCss";
 import CustomDialog from "./CustomDialog";
 import EditTodo from "./EditTodo";
+import moment from "moment";
 
 export default function TodoListing() {
   const [globalState, globalActions] = useGlobal();
@@ -33,7 +34,7 @@ export default function TodoListing() {
         <Card key={it.id} className={classes.card}>
           <CardContent>
             <Typography className={classes.title} color="textSecondary" gutterBottom>
-              {it.createdDate}
+              {moment(new Date(it.createdDate)).format("MMMM Do YYYY, h:mm:ss")}
             </Typography>
             <Typography variant="h5" component="h2">
               {it.content}
