@@ -36,19 +36,16 @@ export default function TodoListing() {
             <Typography className={classes.title} color="textSecondary" gutterBottom>
               {moment(new Date(it.createdDate)).format("MMMM Do YYYY, h:mm:ss")}
             </Typography>
-            <Typography variant="h5" component="h2">
-              {it.content}
-            </Typography>
             <Typography variant="body2" component="p">
               {it.content}
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
             <IconButton onClick={(e) => handleEditClick(it)}>
-              <EditIcon />
+              <EditIcon color="primary"/>
             </IconButton>
             <IconButton onClick={(e) => deleteTodo(it.id, globalActions)}>
-              <DeleteIcon />
+              <DeleteIcon color="error"/>
             </IconButton>
           </CardActions>
         </Card>
