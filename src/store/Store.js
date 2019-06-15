@@ -3,7 +3,6 @@ import useGlobalHook from 'use-global-hook';
 
 const initialState = {
   todos: [],
-  showAddTodoDialog: false,
   showCustomModal: false,
   customModalBody: "",
   customModalTitle: ""

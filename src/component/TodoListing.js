@@ -11,7 +11,6 @@ import SearchAppBar from "./AppBar";
 import {useGlobal} from "../store/Store";
 import {deleteTodo, findAllTodo} from "../data/RestInteraction";
 import {useStyles} from "../css/MaterialCss";
-import AddTodoDialog from "./AddTodo";
 import CustomDialog from "./CustomDialog";
 import EditTodo from "./EditTodo";
 
@@ -57,7 +56,6 @@ export default function TodoListing() {
       <div>
         <CustomDialog/>
         <SearchAppBar/>
-        <AddTodoDialog/>
         <Container component="main" maxWidth="sm">
           {todoCards}
         </Container>

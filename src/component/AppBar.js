@@ -10,10 +10,17 @@ import AddIcon from '@material-ui/icons/Add';
 import {useGlobal} from "../store/Store";
 import {searchTodo} from "../data/RestInteraction";
 import {useStyles} from "../css/MaterialCss";
+import AddTodo from "./AddTodo";
 
 export default function SearchAppBar() {
   const classes = useStyles();
   const [globalState, globalActions] = useGlobal();
+
+  const handleAddClick = () => {
+    globalActions.setCustomModalTitle("Add todo");
+    globalActions.setCustomModalBody(<AddTodo/>);
+    globalActions.setCustomModal(true)
+  };
 
   return (
       <div className={classes.root}>
@@ -49,7 +56,7 @@ export default function SearchAppBar() {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 color="inherit"
-                onClick={(e) => globalActions.setTodoDialog(true)}
+                onClick={(e) => handleAddClick()}
             >
               <AddIcon />
             </IconButton>
