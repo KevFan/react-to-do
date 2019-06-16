@@ -11,7 +11,6 @@ import {useGlobal} from "../../store/Store";
 import {searchTodo} from "../../data/RestInteraction";
 import {useStyles} from "../../css/MaterialCss";
 import AddTodo from "../todo/AddTodo";
-import {LOGIN} from "../../constants/RouterRoutes";
 
 export default function SearchAppBar(props) {
   const classes = useStyles();
@@ -25,7 +24,7 @@ export default function SearchAppBar(props) {
 
   const handleLogOutClick = () => {
     localStorage.removeItem("token");
-    window.location = LOGIN
+    window.location = "/#/"
   };
 
   return (
