@@ -2,7 +2,7 @@ import {
   ADDED_TODO,
   DELETED_TODO,
   GENERAL_FAILURE,
-  INVALID_USERNAME_PASSWORD,
+  INVALID_USERNAME_PASSWORD, NO_TODOS_FOUND,
   SIGN_UP_INVALID,
   SIGN_UP_USER_NAME_TAKEN,
   SIGN_UP_WRONG_PASSWORD,
@@ -25,6 +25,9 @@ export function findAllTodo(globalActions) {
   ).then(data => {
     if (data) {
       globalActions.setTodos(data);
+      if (data.length === 0) {
+        globalActions.showSnackMessage(NO_TODOS_FOUND);
+      }
     }
   });
 }

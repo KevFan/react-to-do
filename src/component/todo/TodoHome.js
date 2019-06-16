@@ -20,7 +20,7 @@ export default function TodoHome() {
   const classes = useStyles();
 
   useEffect(() => {
-    findAllTodo(globalActions)
+    findAllTodo(globalActions);
   }, []);
 
   const handleEditClick = (todo) => {
