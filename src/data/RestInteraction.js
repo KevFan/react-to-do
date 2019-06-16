@@ -24,7 +24,7 @@ export function findAllTodo(globalActions) {
       }
   ).then(data => {
     if (data) {
-      globalActions.setTodos(data)
+      globalActions.setTodos(data);
     }
   });
 }
@@ -43,11 +43,11 @@ export function searchTodo(searchString, globalActions) {
         }
     ).then(data => {
       if (data) {
-        globalActions.setTodos(data)
+        globalActions.setTodos(data);
       }
     });
   } else {
-    findAllTodo(globalActions)
+    findAllTodo(globalActions);
   }
 }
 
@@ -133,7 +133,7 @@ export function login(username, password, props, globalActions) {
 
 export function signUp(username, password, confirmPassword, props, globalActions) {
   if (!(username && password)) {
-    return globalActions.showSnackMessage(SIGN_UP_INVALID)
+    return globalActions.showSnackMessage(SIGN_UP_INVALID);
   }
   if (password !== confirmPassword) {
     return globalActions.showSnackMessage(SIGN_UP_WRONG_PASSWORD);
@@ -147,9 +147,9 @@ export function signUp(username, password, confirmPassword, props, globalActions
   }).then(response => {
         checkForServerFailure(response, globalActions);
         if (response.ok) {
-          login(username, password, props, globalActions)
+          login(username, password, props, globalActions);
         } else if (response.status === 400) {
-          globalActions.showSnackMessage(SIGN_UP_USER_NAME_TAKEN)
+          globalActions.showSnackMessage(SIGN_UP_USER_NAME_TAKEN);
         }
       }
   ).catch(err =>
@@ -159,6 +159,6 @@ export function signUp(username, password, confirmPassword, props, globalActions
 
 function checkForServerFailure(response, globalActions) {
   if (response.status === 500) {
-    return globalActions.showSnackMessage(GENERAL_FAILURE)
+    return globalActions.showSnackMessage(GENERAL_FAILURE);
   }
 }
