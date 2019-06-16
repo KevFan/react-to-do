@@ -1,9 +1,11 @@
 import {
+  ADDED_TODO,
+  DELETED_TODO, GENERAL_FAILURE,
   INVALID_USERNAME_PASSWORD,
   LOGIN_FAILURE,
   SIGN_UP_FAILURE,
   SIGN_UP_INVALID,
-  SIGN_UP_USER_NAME_TAKEN, SIGN_UP_WRONG_PASSWORD
+  SIGN_UP_USER_NAME_TAKEN, SIGN_UP_WRONG_PASSWORD, UPDATED_TODO
 } from "../constants/Messages";
 import {HOME} from "../constants/RouterRoutes";
 
@@ -15,9 +17,15 @@ export function findAllTodo(globalActions) {
     headers: {
       'Authorization': localStorage.getItem("token"),
     }
-  }).then(response =>
-      response.json()
-  ).then(data => globalActions.setTodos(data));
+  }).then(response => {
+        checkForServerFailure(response, globalActions);
+        return response.json()
+      }
+  ).then(data => {
+    if (data) {
+      globalActions.setTodos(data)
+    }
+  });
 }
 
 export function searchTodo(searchString, globalActions) {
@@ -28,9 +36,15 @@ export function searchTodo(searchString, globalActions) {
       headers: {
         'Authorization': localStorage.getItem("token"),
       }
-    }).then(response =>
-        response.json()
-    ).then(data => globalActions.setTodos(data))
+    }).then(response => {
+          checkForServerFailure(response, globalActions);
+          return response.json()
+        }
+    ).then(data => {
+      if (data) {
+        globalActions.setTodos(data)
+      }
+    });
   } else {
     findAllTodo(globalActions)
   }
@@ -43,9 +57,14 @@ export function deleteTodo(id, globalActions) {
     headers: {
       'Authorization': localStorage.getItem("token"),
     }
-  }).then(response =>
-      findAllTodo(globalActions)
-  )
+  }).then(response => {
+    checkForServerFailure(response, globalActions);
+
+    if (response.ok) {
+      findAllTodo(globalActions);
+      globalActions.showSnackMessage(DELETED_TODO);
+    }
+  })
 }
 
 export function addTodo(todoString, globalActions) {
@@ -58,8 +77,12 @@ export function addTodo(todoString, globalActions) {
     },
     body: JSON.stringify({contents: todoString})
   }).then(response => {
-    console.log(response);
-    findAllTodo(globalActions)
+    checkForServerFailure(response, globalActions);
+
+    if (response.ok) {
+      findAllTodo(globalActions);
+      globalActions.showSnackMessage(ADDED_TODO);
+    }
   })
 }
 
@@ -72,7 +95,11 @@ export function updateTodo(id, todoString, globalActions) {
     },
     body: JSON.stringify({contents: todoString})
   }).then(response => {
-    findAllTodo(globalActions)
+    checkForServerFailure(response, globalActions);
+    if (response.ok) {
+      findAllTodo(globalActions);
+      globalActions.showSnackMessage(UPDATED_TODO);
+    }
   })
 }
 
@@ -86,6 +113,7 @@ export function login(username, password, props, globalActions) {
     method: 'POST',
     body: data
   }).then(response => {
+    checkForServerFailure(response, globalActions);
     if (response.ok) {
       response.headers.forEach(function (value, name) {
         if (name === "authorization") {
@@ -95,8 +123,6 @@ export function login(username, password, props, globalActions) {
       });
     } else if (response.status === 401) {
       globalActions.showSnackMessage(INVALID_USERNAME_PASSWORD);
-    } else {
-      globalActions.showSnackMessage(LOGIN_FAILURE);
     }
   }).catch(err => {
         console.log(err);
@@ -118,15 +144,20 @@ export function signUp(username, password, confirmPassword, props, globalActions
     },
     body: JSON.stringify({username: username, password: password})
   }).then(response => {
+        checkForServerFailure(response, globalActions);
         if (response.ok) {
           login(username, password, props, globalActions)
         } else if (response.status === 400) {
           globalActions.showSnackMessage(SIGN_UP_USER_NAME_TAKEN)
-        } else {
-          globalActions.showSnackMessage(SIGN_UP_FAILURE)
         }
       }
   ).catch(err =>
       console.log(err)
   );
+}
+
+function checkForServerFailure(response, globalActions) {
+  if (response.status === 500) {
+    return globalActions.showSnackMessage(GENERAL_FAILURE)
+  }
 }
