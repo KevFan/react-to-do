@@ -10,11 +10,11 @@ import {
 } from "../constants/Messages";
 import {HOME} from "../constants/RouterRoutes";
 
+const apiUrl = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://spring-todo-backend-server.herokuapp.com' : 'http://localhost:3000';
+
 export function findAllTodo(globalActions) {
-  fetch('/api/v1/todo', {
+  fetch(apiUrl + '/api/v1/todo', {
     method: 'GET',
-    withCredentials: true,
-    credentials: 'include',
     headers: {
       'Authorization': localStorage.getItem("token"),
     }
@@ -34,9 +34,8 @@ export function findAllTodo(globalActions) {
 
 export function searchTodo(searchString, globalActions) {
   if (searchString) {
-    fetch('/api/v1/todo/search/' + searchString, {
+    fetch(apiUrl +'/api/v1/todo/search/' + searchString, {
       method: 'GET',
-      withCredentials: true,
       headers: {
         'Authorization': localStorage.getItem("token"),
       }
@@ -55,9 +54,8 @@ export function searchTodo(searchString, globalActions) {
 }
 
 export function deleteTodo(id, globalActions) {
-  fetch('/api/v1/todo/' + id, {
+  fetch(apiUrl +'/api/v1/todo/' + id, {
     method: 'DELETE',
-    withCredentials: true,
     headers: {
       'Authorization': localStorage.getItem("token"),
     }
@@ -72,9 +70,8 @@ export function deleteTodo(id, globalActions) {
 }
 
 export function addTodo(todoString, globalActions) {
-  fetch('/api/v1/todo', {
+  fetch(apiUrl +'/api/v1/todo', {
     method: 'POST',
-    withCredentials: true,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': localStorage.getItem("token"),
@@ -91,7 +88,7 @@ export function addTodo(todoString, globalActions) {
 }
 
 export function updateTodo(id, todoString, globalActions) {
-  fetch('/api/v1/todo/' + id, {
+  fetch(apiUrl +'/api/v1/todo/' + id, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -113,7 +110,7 @@ export function login(username, password, props, globalActions) {
   data.append("username", username);
   data.append("password", password);
 
-  fetch('/api/v1/authenticate', {
+  fetch(apiUrl +'/api/v1/authenticate', {
     method: 'POST',
     body: data
   }).then(response => {
@@ -141,7 +138,7 @@ export function signUp(username, password, confirmPassword, props, globalActions
   if (password !== confirmPassword) {
     return globalActions.showSnackMessage(SIGN_UP_WRONG_PASSWORD);
   }
-  fetch('/api/v1/user', {
+  fetch(apiUrl +'/api/v1/user', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
