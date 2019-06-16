@@ -1,4 +1,10 @@
-import {INVALID_USERNAME_PASSWORD, LOGIN_FAILURE, SIGN_UP_FAILURE, SIGN_UP_INVALID} from "../constants/Messages";
+import {
+  INVALID_USERNAME_PASSWORD,
+  LOGIN_FAILURE,
+  SIGN_UP_FAILURE,
+  SIGN_UP_INVALID,
+  SIGN_UP_USER_NAME_TAKEN
+} from "../constants/Messages";
 import {HOME} from "../constants/RouterRoutes";
 
 export function findAllTodo(globalActions) {
@@ -109,6 +115,8 @@ export function signUp(username, password, props, globalActions) {
     }).then(response => {
           if (response.ok) {
             login(username, password, props, globalActions)
+          } else if (response.status === 400) {
+            globalActions.showSnackMessage(SIGN_UP_USER_NAME_TAKEN)
           } else {
             globalActions.showSnackMessage(SIGN_UP_FAILURE)
           }
