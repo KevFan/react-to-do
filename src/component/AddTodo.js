@@ -7,7 +7,7 @@ import {useGlobal} from "../store/Store";
 import {addTodo} from "../data/RestInteraction";
 
 export default function AddTodo() {
-  const [globalActions] = useGlobal();
+  const [globalState, globalActions] = useGlobal();
   const [content, setContent] = useState("");
 
   const handleAddTodo = () => {

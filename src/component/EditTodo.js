@@ -8,7 +8,7 @@ import {updateTodo} from "../data/RestInteraction";
 
 export default function EditTodoDialog(props) {
   const [content, setContent] = useState(props.todo.content);
-  const [globalActions] = useGlobal();
+  const [globalState, globalActions] = useGlobal();
 
   const handleUpdateClick = () => {
     updateTodo(props.todo.id, content, globalActions);

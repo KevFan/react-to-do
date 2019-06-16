@@ -14,7 +14,7 @@ import {Link} from "react-router-dom";
 
 export default function Login(props) {
   const classes = useStyles();
-  const [globalActions] = useGlobal();
+  const [globalState, globalActions] = useGlobal();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
