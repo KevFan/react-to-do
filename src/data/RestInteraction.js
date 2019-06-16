@@ -1,3 +1,5 @@
+import {INVALID_USERNAME_PASSWORD, LOGIN_FAILURE, SIGN_UP_FAILURE, SIGN_UP_INVALID} from "../constants/Messages";
+
 export function findAllTodo(globalActions) {
   fetch('/api/v1/todo', {
     method: 'GET',
@@ -49,8 +51,8 @@ export function addTodo(todoString, globalActions) {
     },
     body: JSON.stringify({contents: todoString})
   }).then(response => {
-        console.log(response);
-        findAllTodo(globalActions)
+    console.log(response);
+    findAllTodo(globalActions)
   })
 }
 
@@ -78,17 +80,20 @@ export function login(username, password, props, globalActions) {
     body: data
   }).then(response => {
     if (response.ok) {
-      response.headers.forEach(function(value, name) {
+      response.headers.forEach(function (value, name) {
         if (name === "authorization") {
           localStorage.setItem("token", value);
           props.history.push("/todo");
         }
       });
+    } else if (response.status === 401) {
+      globalActions.showSnackMessage(INVALID_USERNAME_PASSWORD);
     } else {
-      globalActions.showSnackMessage("Username / Password Incorrect");
+      globalActions.showSnackMessage(LOGIN_FAILURE);
     }
-  }).catch(err =>
-      console.log(err)
+  }).catch(err => {
+        console.log(err);
+      }
   );
 }
 
@@ -104,13 +109,13 @@ export function signUp(username, password, props, globalActions) {
           if (response.ok) {
             login(username, password, props, globalActions)
           } else {
-            globalActions.showSnackMessage("Failed to create account Please try again later.")
+            globalActions.showSnackMessage(SIGN_UP_FAILURE)
           }
         }
     ).catch(err =>
         console.log(err)
     );
   } else {
-    globalActions.showSnackMessage("Username and password must not be blank!")
+    globalActions.showSnackMessage(SIGN_UP_INVALID)
   }
 }
