@@ -11,8 +11,11 @@ import {useGlobal} from "../../store/Store";
 import {searchTodo} from "../../data/RestInteraction";
 import {useStyles} from "../../css/MaterialCss";
 import AddTodo from "../todo/AddTodo";
+import {withRouter} from "react-router-dom";
+import {LOGIN} from "../../constants/RouterRoutes";
 
-export default function SearchAppBar(props) {
+
+function SearchAppBar(props) {
   const classes = useStyles();
   const [globalState, globalActions] = useGlobal();
 
@@ -24,7 +27,7 @@ export default function SearchAppBar(props) {
 
   const handleLogOutClick = () => {
     localStorage.removeItem("token");
-    window.location = "/#/"
+    props.history.push(LOGIN);
   };
 
   return (
@@ -71,3 +74,5 @@ export default function SearchAppBar(props) {
       </div>
   );
 }
+
+export default withRouter(SearchAppBar)
