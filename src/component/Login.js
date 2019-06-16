@@ -11,6 +11,7 @@ import {useStyles} from "../css/MaterialCss";
 import {login} from "../data/RestInteraction";
 import {useGlobal} from "../store/Store";
 import {Link} from "react-router-dom";
+import {SIGNUP} from "../constants/RouterRoutes";
 
 export default function Login(props) {
   const classes = useStyles();
@@ -65,7 +66,7 @@ export default function Login(props) {
             </Button>
             <Grid container>
               <Grid item>
-                <Link to={"/signup"} variant="body2">
+                <Link to={SIGNUP} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

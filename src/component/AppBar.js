@@ -11,6 +11,7 @@ import {useGlobal} from "../store/Store";
 import {searchTodo} from "../data/RestInteraction";
 import {useStyles} from "../css/MaterialCss";
 import AddTodo from "./AddTodo";
+import {LOGIN} from "../constants/RouterRoutes";
 
 export default function SearchAppBar(props) {
   const classes = useStyles();
@@ -24,7 +25,7 @@ export default function SearchAppBar(props) {
 
   const handleLogOutClick = () => {
     localStorage.removeItem("token");
-    window.location = "/"
+    window.location = LOGIN
   };
 
   return (
@@ -36,7 +37,7 @@ export default function SearchAppBar(props) {
             </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
-                <SearchIcon />
+                <SearchIcon/>
               </div>
               <InputBase
                   placeholder="Search…"
@@ -44,7 +45,7 @@ export default function SearchAppBar(props) {
                     root: classes.inputRoot,
                     input: classes.inputInput,
                   }}
-                  inputProps={{ 'aria-label': 'Search' }}
+                  inputProps={{'aria-label': 'Search'}}
                   onChange={(e) => searchTodo(e.target.value, globalActions)}
               />
             </div>
@@ -55,7 +56,7 @@ export default function SearchAppBar(props) {
                 color="inherit"
                 onClick={(e) => handleAddClick()}
             >
-              <AddIcon />
+              <AddIcon/>
             </IconButton>
             <IconButton
                 aria-label="add a new todo"
@@ -64,7 +65,7 @@ export default function SearchAppBar(props) {
                 color="inherit"
                 onClick={(e) => handleLogOutClick()}
             >
-              <LogoutIcon />
+              <LogoutIcon/>
             </IconButton>
           </Toolbar>
         </AppBar>

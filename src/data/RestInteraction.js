@@ -1,4 +1,5 @@
 import {INVALID_USERNAME_PASSWORD, LOGIN_FAILURE, SIGN_UP_FAILURE, SIGN_UP_INVALID} from "../constants/Messages";
+import {HOME} from "../constants/RouterRoutes";
 
 export function findAllTodo(globalActions) {
   fetch('/api/v1/todo', {
@@ -83,7 +84,7 @@ export function login(username, password, props, globalActions) {
       response.headers.forEach(function (value, name) {
         if (name === "authorization") {
           localStorage.setItem("token", value);
-          props.history.push("/todo");
+          props.history.push(HOME);
         }
       });
     } else if (response.status === 401) {
