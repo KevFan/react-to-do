@@ -7,15 +7,15 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Container from "@material-ui/core/Container";
 import IconButton from "@material-ui/core/IconButton";
-import SearchAppBar from "./AppBar";
-import {useGlobal} from "../store/Store";
-import {deleteTodo, findAllTodo} from "../data/RestInteraction";
-import {useStyles} from "../css/MaterialCss";
-import CustomDialog from "./CustomDialog";
+import SearchAppBar from "../layout/AppBar";
+import {useGlobal} from "../../store/Store";
+import {deleteTodo, findAllTodo} from "../../data/RestInteraction";
+import {useStyles} from "../../css/MaterialCss";
+import CustomDialog from "../layout/CustomDialog";
 import EditTodo from "./EditTodo";
 import moment from "moment";
 
-export default function TodoListing() {
+export default function TodoHome() {
   const [globalState, globalActions] = useGlobal();
   const classes = useStyles();
 

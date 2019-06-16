@@ -3,15 +3,15 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import {useGlobal} from "../store/Store";
-import {updateTodo} from "../data/RestInteraction";
+import {useGlobal} from "../../store/Store";
+import {addTodo} from "../../data/RestInteraction";
 
-export default function EditTodoDialog(props) {
-  const [content, setContent] = useState(props.todo.content);
+export default function AddTodo() {
   const [globalState, globalActions] = useGlobal();
+  const [content, setContent] = useState("");
 
-  const handleUpdateClick = () => {
-    updateTodo(props.todo.id, content, globalActions);
+  const handleAddTodo = () => {
+    addTodo(content, globalActions);
     globalActions.closeDialog();
   };
 
@@ -25,7 +25,6 @@ export default function EditTodoDialog(props) {
                 label="Content"
                 type="text"
                 fullWidth
-                value={content}
                 multiline={true}
                 onChange={(e) => setContent(e.target.value)}
             />
@@ -34,8 +33,8 @@ export default function EditTodoDialog(props) {
             <Button onClick={(e) => globalActions.closeDialog()} color="primary">
               Cancel
             </Button>
-            <Button onClick={(e) => handleUpdateClick()} color="primary">
-              Update
+            <Button onClick={(e) => handleAddTodo()} color="primary">
+              Add
             </Button>
           </DialogActions>
       </div>

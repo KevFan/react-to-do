@@ -7,11 +7,11 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
 import LogoutIcon from '@material-ui/icons/Forward';
-import {useGlobal} from "../store/Store";
-import {searchTodo} from "../data/RestInteraction";
-import {useStyles} from "../css/MaterialCss";
-import AddTodo from "./AddTodo";
-import {LOGIN} from "../constants/RouterRoutes";
+import {useGlobal} from "../../store/Store";
+import {searchTodo} from "../../data/RestInteraction";
+import {useStyles} from "../../css/MaterialCss";
+import AddTodo from "../todo/AddTodo";
+import {LOGIN} from "../../constants/RouterRoutes";
 
 export default function SearchAppBar(props) {
   const classes = useStyles();

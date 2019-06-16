@@ -2,8 +2,8 @@ import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import {useGlobal} from "../store/Store";
-import {useStyles} from "../css/MaterialCss";
+import {useGlobal} from "../../store/Store";
+import {useStyles} from "../../css/MaterialCss";
 
 export default function CustomSnackbar() {
   const classes = useStyles();

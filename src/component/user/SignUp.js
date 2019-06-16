@@ -7,11 +7,11 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import {useStyles} from "../css/MaterialCss";
-import {signUp} from "../data/RestInteraction";
-import {useGlobal} from "../store/Store";
+import {useStyles} from "../../css/MaterialCss";
+import {signUp} from "../../data/RestInteraction";
+import {useGlobal} from "../../store/Store";
 import {Link} from "react-router-dom";
-import {LOGIN} from "../constants/RouterRoutes";
+import {LOGIN} from "../../constants/RouterRoutes";
 
 export default function SignUp(props) {
   const classes = useStyles();

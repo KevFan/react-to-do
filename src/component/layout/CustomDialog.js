@@ -1,7 +1,7 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {useGlobal} from "../store/Store";
+import {useGlobal} from "../../store/Store";
 
 export default function CustomDialog(props) {
   const [globalState, globalActions] = useGlobal();
