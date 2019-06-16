@@ -25,13 +25,16 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 Running `npm run build` builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
+### How to deploy application
+Running `npm run deploy` would deploy to the Github gh-pages of the repository. Ensure repository
+exits and change the homepage on `package.json` to your Github username if deploying to own github account.
+
 ### Improvements
 * First time building a React App with Hooks. I'm imagine there are areas of the code that do
 not follow conventions.
 * User CRUD actions makes an additional call to re-fetch all todos to refresh listing instead
 of just affecting state.
 * Likely do not need to have a global state for todos if hooks were used correctly 
-
 
 ### Reference Documentation
 * [State Management with React Hooks](https://medium.com/javascript-in-plain-english/state-management-with-react-hooks-no-redux-or-context-api-8b3035ceecf8)
