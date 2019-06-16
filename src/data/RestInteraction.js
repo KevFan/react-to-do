@@ -3,7 +3,7 @@ import {
   LOGIN_FAILURE,
   SIGN_UP_FAILURE,
   SIGN_UP_INVALID,
-  SIGN_UP_USER_NAME_TAKEN
+  SIGN_UP_USER_NAME_TAKEN, SIGN_UP_WRONG_PASSWORD
 } from "../constants/Messages";
 import {HOME} from "../constants/RouterRoutes";
 
@@ -104,27 +104,29 @@ export function login(username, password, props, globalActions) {
   );
 }
 
-export function signUp(username, password, props, globalActions) {
-  if (username && password) {
-    fetch('/api/v1/user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({username: username, password: password})
-    }).then(response => {
-          if (response.ok) {
-            login(username, password, props, globalActions)
-          } else if (response.status === 400) {
-            globalActions.showSnackMessage(SIGN_UP_USER_NAME_TAKEN)
-          } else {
-            globalActions.showSnackMessage(SIGN_UP_FAILURE)
-          }
-        }
-    ).catch(err =>
-        console.log(err)
-    );
-  } else {
-    globalActions.showSnackMessage(SIGN_UP_INVALID)
+export function signUp(username, password, confirmPassword, props, globalActions) {
+  if (!(username && password)) {
+    return globalActions.showSnackMessage(SIGN_UP_INVALID)
   }
+  if (password !== confirmPassword) {
+    return globalActions.showSnackMessage(SIGN_UP_WRONG_PASSWORD);
+  }
+  fetch('/api/v1/user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({username: username, password: password})
+  }).then(response => {
+        if (response.ok) {
+          login(username, password, props, globalActions)
+        } else if (response.status === 400) {
+          globalActions.showSnackMessage(SIGN_UP_USER_NAME_TAKEN)
+        } else {
+          globalActions.showSnackMessage(SIGN_UP_FAILURE)
+        }
+      }
+  ).catch(err =>
+      console.log(err)
+  );
 }

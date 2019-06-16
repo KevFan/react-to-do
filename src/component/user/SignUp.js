@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import PersonIcon from '@material-ui/icons/Person';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {useStyles} from "../../css/MaterialCss";
@@ -18,6 +18,7 @@ export default function SignUp(props) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [globalState, globalActions] = useGlobal();
 
   return (
@@ -25,7 +26,7 @@ export default function SignUp(props) {
         <CssBaseline/>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon/>
+            <PersonIcon/>
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign Up
@@ -55,12 +56,24 @@ export default function SignUp(props) {
                 autoComplete="current-password"
                 onChange={(e) => setPassword(e.target.value)}
             />
+            <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                id="confirmPassword"
+                autoComplete="confirm-password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+            />
             <Button
                 fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={(e) => signUp(username, password, props, globalActions)}
+                onClick={(e) => signUp(username, password, confirmPassword, props, globalActions)}
             >
               Create Account
             </Button>
