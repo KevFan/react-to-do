@@ -76,7 +76,7 @@ export function login(username, password, props, globalActions) {
   data.append("username", username);
   data.append("password", password);
 
-  fetch('/api/authenticate', {
+  fetch('/api/v1/authenticate', {
     method: 'POST',
     body: data
   }).then(response => {
