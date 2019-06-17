@@ -2,7 +2,6 @@ import React from 'react';
 import useGlobalHook from 'use-global-hook';
 
 const initialState = {
-  todos: [],
   showCustomModal: false,
   customModalBody: "",
   customModalTitle: "",
@@ -11,9 +10,6 @@ const initialState = {
 };
 
 const actions = {
-  setTodos: (store, todos) => {
-    store.setState({ todos: todos });
-  },
   setCustomModalBody: (store, body) => {
     store.setState({ customModalBody: body });
   },

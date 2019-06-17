@@ -6,12 +6,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import {useGlobal} from "../../store/Store";
 import {addTodo} from "../../data/RestInteraction";
 
-export default function AddTodo() {
+export default function AddTodo(props) {
   const [globalState, globalActions] = useGlobal();
   const [content, setContent] = useState("");
 
   const handleAddTodo = () => {
-    addTodo(content, globalActions);
+    addTodo(content, props.addNewTodo, globalActions);
     globalActions.closeDialog();
   };
 

@@ -21,7 +21,7 @@ function SearchAppBar(props) {
 
   const handleAddClick = () => {
     globalActions.setCustomModalTitle("Add todo");
-    globalActions.setCustomModalBody(<AddTodo/>);
+    globalActions.setCustomModalBody(<AddTodo addNewTodo={props.addNewTodo}/>);
     globalActions.openDialog();
   };
 
@@ -48,7 +48,7 @@ function SearchAppBar(props) {
                     input: classes.inputInput,
                   }}
                   inputProps={{'aria-label': 'Search'}}
-                  onChange={(e) => searchTodo(e.target.value, globalActions)}
+                  onChange={(e) => searchTodo(e.target.value, props.setTodos, globalActions)}
               />
             </div>
             <IconButton

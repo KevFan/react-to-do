@@ -12,7 +12,7 @@ import {HOME} from "../constants/RouterRoutes";
 
 const apiUrl = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://spring-todo-backend-server.herokuapp.com' : 'http://localhost:3000';
 
-export function findAllTodo(globalActions) {
+export function findAllTodo(setTodosToState, globalActions) {
   fetch(apiUrl + '/api/v1/todo', {
     method: 'GET',
     headers: {
@@ -24,7 +24,7 @@ export function findAllTodo(globalActions) {
       }
   ).then(data => {
     if (data) {
-      globalActions.setTodos(data);
+      setTodosToState(data);
       if (data.length === 0) {
         globalActions.showSnackMessage(NO_TODOS_FOUND);
       }
@@ -32,7 +32,7 @@ export function findAllTodo(globalActions) {
   });
 }
 
-export function searchTodo(searchString, globalActions) {
+export function searchTodo(searchString, setTodos, globalActions) {
   if (searchString) {
     fetch(apiUrl +'/api/v1/todo/search/' + searchString, {
       method: 'GET',
@@ -45,15 +45,15 @@ export function searchTodo(searchString, globalActions) {
         }
     ).then(data => {
       if (data) {
-        globalActions.setTodos(data);
+        setTodos(data);
       }
     });
   } else {
-    findAllTodo(globalActions);
+    findAllTodo(setTodos, globalActions);
   }
 }
 
-export function deleteTodo(id, globalActions) {
+export function deleteTodo(id, deleteTodoInState, globalActions) {
   fetch(apiUrl +'/api/v1/todo/' + id, {
     method: 'DELETE',
     headers: {
@@ -63,13 +63,13 @@ export function deleteTodo(id, globalActions) {
     checkForServerFailure(response, globalActions);
 
     if (response.ok) {
-      findAllTodo(globalActions);
+      deleteTodoInState(id);
       globalActions.showSnackMessage(DELETED_TODO);
     }
   })
 }
 
-export function addTodo(todoString, globalActions) {
+export function addTodo(todoString, addNewTodoToState, globalActions) {
   fetch(apiUrl +'/api/v1/todo', {
     method: 'POST',
     headers: {
@@ -79,15 +79,16 @@ export function addTodo(todoString, globalActions) {
     body: JSON.stringify({contents: todoString})
   }).then(response => {
     checkForServerFailure(response, globalActions);
-
-    if (response.ok) {
-      findAllTodo(globalActions);
+    return response.json();
+  }).then(data => {
+    if (data) {
+      addNewTodoToState(data);
       globalActions.showSnackMessage(ADDED_TODO);
     }
   })
 }
 
-export function updateTodo(id, todoString, globalActions) {
+export function updateTodo(id, todoString, updateTodoInState, globalActions) {
   fetch(apiUrl +'/api/v1/todo/' + id, {
     method: 'PUT',
     headers: {
@@ -97,8 +98,10 @@ export function updateTodo(id, todoString, globalActions) {
     body: JSON.stringify({contents: todoString})
   }).then(response => {
     checkForServerFailure(response, globalActions);
-    if (response.ok) {
-      findAllTodo(globalActions);
+    return response.json();
+  }).then(data => {
+    if (data) {
+      updateTodoInState(data);
       globalActions.showSnackMessage(UPDATED_TODO);
     }
   })

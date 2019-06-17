@@ -11,7 +11,7 @@ export default function EditTodoDialog(props) {
   const [globalState, globalActions] = useGlobal();
 
   const handleUpdateClick = () => {
-    updateTodo(props.todo.id, content, globalActions);
+    updateTodo(props.todo.id, content, props.updateTodoInState, globalActions);
     globalActions.closeDialog();
   };
 

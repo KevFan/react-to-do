@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -17,19 +17,34 @@ import moment from "moment";
 
 export default function TodoHome() {
   const [globalState, globalActions] = useGlobal();
+  const [todos, setTodos] = useState([]);
   const classes = useStyles();
 
+  const addNewTodo = (newTodo) => {
+    setTodos([...todos, newTodo]);
+  };
+
+  const deleteTodoInState = (id) => {
+    setTodos(todos.filter(it => it.id !== id));
+  };
+
+  const updateTodoInState = (updatedTodo) => {
+    const index = todos.findIndex( it => it.id === updatedTodo.id);
+    todos[index] = updatedTodo;
+    setTodos(todos);
+  };
+
   useEffect(() => {
-    findAllTodo(globalActions);
+    findAllTodo(setTodos, globalActions);
   }, []);
 
   const handleEditClick = (todo) => {
     globalActions.setCustomModalTitle("Update Todo");
-    globalActions.setCustomModalBody(<EditTodo todo={todo}/>);
+    globalActions.setCustomModalBody(<EditTodo todo={todo} updateTodoInState={updateTodoInState}/>);
     globalActions.openDialog();
   };
 
-  const todoCards = globalState.todos.map(it => {
+  const todoCards = todos.map(it => {
     return (
         <Card key={it.id} className={classes.card}>
           <CardContent>
@@ -44,7 +59,7 @@ export default function TodoHome() {
             <IconButton onClick={(e) => handleEditClick(it)}>
               <EditIcon color="primary"/>
             </IconButton>
-            <IconButton onClick={(e) => deleteTodo(it.id, globalActions)}>
+            <IconButton onClick={(e) => deleteTodo(it.id, deleteTodoInState, globalActions)}>
               <DeleteIcon color="error"/>
             </IconButton>
           </CardActions>
@@ -55,7 +70,7 @@ export default function TodoHome() {
   return (
       <div>
         <CustomDialog/>
-        <SearchAppBar/>
+        <SearchAppBar addNewTodo={addNewTodo} setTodos={setTodos}/>
         <Container component="main" maxWidth="sm">
           {todoCards}
         </Container>
