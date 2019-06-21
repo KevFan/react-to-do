@@ -15,7 +15,7 @@ import CustomDialog from "../layout/CustomDialog";
 import EditTodo from "./EditTodo";
 import moment from "moment";
 
-export default function TodoHome() {
+export default function TodoHome(props) {
   const [globalState, globalActions] = useGlobal();
   const [todos, setTodos] = useState([]);
   const classes = useStyles();
@@ -35,7 +35,7 @@ export default function TodoHome() {
   };
 
   useEffect(() => {
-    findAllTodo(setTodos, globalActions);
+    findAllTodo(setTodos, globalActions, props);
   }, []);
 
   const handleEditClick = (todo) => {
@@ -59,7 +59,7 @@ export default function TodoHome() {
             <IconButton onClick={(e) => handleEditClick(it)}>
               <EditIcon color="primary"/>
             </IconButton>
-            <IconButton onClick={(e) => deleteTodo(it.id, deleteTodoInState, globalActions)}>
+            <IconButton onClick={(e) => deleteTodo(it.id, deleteTodoInState, globalActions, props)}>
               <DeleteIcon color="error"/>
             </IconButton>
           </CardActions>

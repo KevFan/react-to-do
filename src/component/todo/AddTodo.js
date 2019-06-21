@@ -5,13 +5,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import {useGlobal} from "../../store/Store";
 import {addTodo} from "../../data/RestInteraction";
+import {withRouter} from "react-router-dom";
 
-export default function AddTodo(props) {
+function AddTodo(props) {
   const [globalState, globalActions] = useGlobal();
   const [content, setContent] = useState("");
 
   const handleAddTodo = () => {
-    addTodo(content, props.addNewTodo, globalActions);
+    addTodo(content, props.addNewTodo, globalActions, props);
     globalActions.closeDialog();
   };
 
@@ -40,3 +41,5 @@ export default function AddTodo(props) {
       </div>
   );
 }
+
+export default withRouter(AddTodo)

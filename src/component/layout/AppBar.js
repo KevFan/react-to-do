@@ -48,7 +48,7 @@ function SearchAppBar(props) {
                     input: classes.inputInput,
                   }}
                   inputProps={{'aria-label': 'Search'}}
-                  onChange={(e) => searchTodo(e.target.value, props.setTodos, globalActions)}
+                  onChange={(e) => searchTodo(e.target.value, props.setTodos, globalActions, props)}
               />
             </div>
             <IconButton

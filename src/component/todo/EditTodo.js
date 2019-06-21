@@ -5,13 +5,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import {useGlobal} from "../../store/Store";
 import {updateTodo} from "../../data/RestInteraction";
+import {withRouter} from "react-router-dom";
 
-export default function EditTodoDialog(props) {
+function EditTodoDialog(props) {
   const [content, setContent] = useState(props.todo.content);
   const [globalState, globalActions] = useGlobal();
 
   const handleUpdateClick = () => {
-    updateTodo(props.todo.id, content, props.updateTodoInState, globalActions);
+    updateTodo(props.todo.id, content, props.updateTodoInState, globalActions, props);
     globalActions.closeDialog();
   };
 
@@ -41,3 +42,5 @@ export default function EditTodoDialog(props) {
       </div>
   );
 }
+
+export default withRouter(EditTodoDialog)
