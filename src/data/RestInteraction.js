@@ -10,7 +10,7 @@ import {
 } from "../constants/Messages";
 import {HOME, LOGIN} from "../constants/RouterRoutes";
 
-const apiUrl = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://spring-todo-backend-server.herokuapp.com' : 'http://localhost:3000';
+const apiUrl = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://spring-todo-backend-server.herokuapp.com' : 'http://localhost:8080';
 
 export function findAllTodo(setTodosToState, globalActions, props) {
   fetch(apiUrl + '/api/v1/todo', {
